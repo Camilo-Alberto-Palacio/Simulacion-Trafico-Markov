@@ -12,22 +12,13 @@
 
 ---
 
-## 👥 2. Asignación de Roles por Integrante
+## 👥 2. Asignación de Roles por Integrante (Grupo 25)
 
-### Si el grupo es de 4 personas:
-* **Integrante 1:** Introducción, contextualización del problema e idoneidad del Modelo Oculto de Markov.
-* **Integrante 2:** Fundamentación matemática: vector inicial $\pi$, matriz de transición $A$ y matriz de emisión $B$.
-* **Integrante 3:** Demostración en vivo del código en Python (`main.py` o Jupyter Notebook) y algoritmo de Viterbi.
-* **Integrante 4:** Análisis de resultados (gráficas 24h, convergencia estacionaria, contingencia) y conclusiones finales.
-
-### Si el grupo es de 3 personas:
-* **Integrante 1:** Introducción, contextualización y justificación del HMM (problema + dualidad estados/observaciones).
-* **Integrante 2:** Matrices del modelo ($\pi$, $A$, $B$) y demostración en vivo del código (`main.py`).
-* **Integrante 3:** Análisis de resultados gráficos (Viterbi, Monte Carlo, incidente) y conclusiones.
-
-### Si el grupo es de 2 personas:
-* **Integrante 1:** Introducción, pertinencia del problema, justificación de HMM y explicación de matrices ($\pi, A, B$).
-* **Integrante 2:** Demostración práctica del código, análisis de las 6 gráficas de resultados y conclusiones.
+El equipo de trabajo está compuesto por los 4 integrantes:
+* **Integrante 1 (Adriana Andrea Agudelo Agudelo):** Introducción, contextualización del problema e idoneidad del Modelo Oculto de Markov (HMM).
+* **Integrante 2 (Camilo Alberto Palacios Turriago):** Fundamentación matemática: vector inicial $\pi$, matriz de transición $A$ y matriz de emisión $B$.
+* **Integrante 3 (Juan Daniel Pulgarin García):** Demostración en vivo del código en Python (`main.py` / Google Colab) y algoritmo de Viterbi.
+* **Integrante 4 (Ruben Dario Jaramillo Cervantes):** Análisis de resultados (gráficas 24h, convergencia estacionaria, contingencia) y conclusiones finales.
 
 ---
 
@@ -35,21 +26,21 @@
 
 ```text
 TIEMPO TOTAL: ~6:30 minutos
-├── [0:00 - 1:15] Bloque 1: Saludo, Introducción y Justificación del HMM
-├── [1:15 - 2:30] Bloque 2: Significado de las Matrices (π, A, B)
-├── [2:30 - 4:00] Bloque 3: Demostración en Vivo del Código en Python
-├── [4:00 - 5:30] Bloque 4: Análisis de Resultados y Visualizaciones
-└── [5:30 - 6:30] Bloque 5: Conclusiones y Cierre
+├── [0:00 - 1:15] Bloque 1: Saludo, Introducción y Justificación del HMM (Adriana)
+├── [1:15 - 2:30] Bloque 2: Significado de las Matrices (π, A, B) (Camilo)
+├── [2:30 - 4:00] Bloque 3: Demostración en Vivo en Python / Google Colab (Juan Daniel)
+├── [4:00 - 5:30] Bloque 4: Análisis de Resultados y Visualizaciones (Ruben Dario)
+└── [5:30 - 6:30] Bloque 5: Conclusiones y Cierre (Equipo completo)
 ```
 
 ---
 
 ### 🕒 [0:00 - 1:15] Bloque 1: Saludo, Introducción y Justificación del HMM
-**Quién expone:** Integrante 1  
+**Quién expone:** Adriana Andrea Agudelo Agudelo  
 **Qué mostrar en pantalla:** Diapositiva 1 (Título, integrantes, logo de IU Digital) y Diapositiva 2 (Diagrama conceptual del HMM: Estados Ocultos vs Observaciones).
 
 > **Guion sugerido:**
-> *"Cordial saludo profesor y companeros. Somos el equipo conformado por [Nombres completos de los integrantes] para la asignatura de Simulación de la IU Digital de Antioquia.
+> *"Cordial saludo profesor Julian Andres Loaiza y compañeros. Somos el equipo del Grupo 25, conformado por Adriana Agudelo, Camilo Palacios, Juan Daniel Pulgarin y Ruben Dario Jaramillo, para la asignatura de Simulación de la IU Digital de Antioquia.
 > 
 > En esta segunda actividad didáctica, nos propusimos modelar y simular un proceso estocástico del mundo real: **la predicción y estimación del tráfico vehicular en un corredor urbano arterial**.
 > 
@@ -62,7 +53,7 @@ TIEMPO TOTAL: ~6:30 minutos
 ---
 
 ### 🕒 [1:15 - 2:30] Bloque 2: Significado de las Matrices del Modelo
-**Quién expone:** Integrante 2  
+**Quién expone:** Camilo Alberto Palacios Turriago  
 **Qué mostrar en pantalla:** Diapositiva 3 (Figura 1: Mapas de calor de las matrices $A$ y $B$, y vector $\pi$).
 
 > **Guion sugerido:**
@@ -76,16 +67,16 @@ TIEMPO TOTAL: ~6:30 minutos
 
 ---
 
-### 🕒 [2:30 - 4:00] Bloque 3: Demostración en Vivo del Código en Python
-**Quién expone:** Integrante 3  
-**Qué mostrar en pantalla:** Terminal de comandos (PowerShell / CMD) ejecutando `python main.py` o las celdas del Jupyter Notebook `simulacion_trafico.ipynb`.
+### 🕒 [2:30 - 4:00] Bloque 3: Demostración en Vivo del Código en Python / Google Colab
+**Quién expone:** Juan Daniel Pulgarin García  
+**Qué mostrar en pantalla:** Cuaderno en Google Colab (`Simulacion_Markov_Trafico_Colab.ipynb`) o Terminal de comandos ejecutando `python main.py`.
 
 > **Guion sugerido:**
-> *(El estudiante comparte pantalla mostrando la terminal y escribe `python main.py`)*
+> *(El estudiante comparte pantalla mostrando Google Colab o la terminal y ejecuta la simulación)*
 > 
-> *"Ahora pasamos a la demostración práctica del código fuente. Desarrollamos una librería modular en Python organizada en una clase principal `TrafficHMM`, un controlador de simulación y un módulo de visualizaciones.
+> *"Ahora pasamos a la demostración práctica de la solución computacional. Desarrollamos una implementación en Python y un cuaderno interactivo listo para ejecutarse en la nube en Google Colab.
 > 
-> Al ejecutar `python main.py`:
+> Al ejecutar la simulación:
 > 
 > - En el **Paso 1 y 2**, el programa inicializa las matrices y calcula analíticamente la **Distribución Estacionaria**, que resulta ser: $31.68\%$ para Fluido, $40.59\%$ para Moderado y $27.72\%$ para Congestionado. También calcula los **tiempos de permanencia**: el tráfico permanece en promedio 50 minutos en Fluido, 37.5 minutos en Moderado y 42.9 minutos en Congestionado.
 > 
@@ -96,7 +87,7 @@ TIEMPO TOTAL: ~6:30 minutos
 ---
 
 ### 🕒 [4:00 - 5:30] Bloque 4: Análisis de Resultados y Visualizaciones
-**Quién expone:** Integrante 4 (o Integrante 1/2 si son menos de 4)  
+**Quién expone:** Ruben Dario Jaramillo Cervantes  
 **Qué mostrar en pantalla:** Mostrar las figuras generadas en la carpeta `results/` (`fig2_simulacion_jornada_24h.png`, `fig3_convergencia...png`, `fig5_escenario_incidente...png`, `fig6_matriz_confusion...png`).
 
 > **Guion sugerido:**

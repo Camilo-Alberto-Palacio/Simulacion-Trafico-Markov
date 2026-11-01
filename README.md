@@ -219,10 +219,25 @@ Cero confusiones críticas entre estados extremos (nunca se clasifica congestió
 
 ---
 
-## 👥 Equipo de Trabajo
+## 👥 Equipo de Trabajo (Grupo 25)
 
-* **Camilo Palacios** - *Desarrollo de Simulación, Modelado Matemático e Implementación HMM*
-* *(Compañeros de equipo de trabajo inscritos en Canvas)*
+* **Adriana Andrea Agudelo Agudelo**
+* **Camilo Alberto Palacios Turriago**
+* **Juan Daniel Pulgarin García**
+* **Ruben Dario Jaramillo Cervantes**
+
+**Docente:** Julian Andres Loaiza Lopez  
+**Asignatura:** Simulación - PREICA2602B020045  
+**Institución:** Institución Universitaria Digital de Antioquia (IU Digital)  
+**Fecha:** Noviembre de 2026
+
+---
+
+## 🌐 Google Colab
+
+El proyecto incluye un cuaderno completamente autocontenido listo para ejecutarse en la nube:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/markov-traffic-simulation/blob/main/Simulacion_Markov_Trafico_Colab.ipynb)
 
 ---
 
