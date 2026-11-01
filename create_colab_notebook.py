@@ -36,7 +36,7 @@ cells = [
     md_cell(
         """# 🚦 Simulación Estocástica de Tráfico Vehicular mediante un Modelo Oculto de Markov (HMM)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/markov-traffic-simulation/blob/master/Simulacion_Markov_Trafico_Colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/Simulacion-Trafico-Markov/blob/main/Simulacion_Markov_Trafico_Colab.ipynb)
 
 ---
 ### 🏛️ Institución Universitaria Digital de Antioquia (IU Digital)

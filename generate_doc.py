@@ -859,7 +859,7 @@ def build_document(output_filename: str = "Palacios_Camilo_Markov.docx") -> None
         [
             [
                 "Repositorio GitHub",
-                "https://github.com/Camilo-Alberto-Palacio/markov-traffic-simulation",
+                "https://github.com/Camilo-Alberto-Palacio/Simulacion-Trafico-Markov",
                 "Paquete traffic_hmm/, main.py, tests/test_hmm.py, resultados CSV/PNG y README detallado."
             ],
             [

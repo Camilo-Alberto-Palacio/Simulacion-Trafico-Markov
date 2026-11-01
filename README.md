@@ -1,6 +1,6 @@
 # 🚦 Simulación Estocástica de Tráfico Vehicular con Modelo Oculto de Markov (HMM)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/markov-traffic-simulation/blob/master/Simulacion_Markov_Trafico_Colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/Simulacion-Trafico-Markov/blob/main/Simulacion_Markov_Trafico_Colab.ipynb)
 ![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
 ![Tests](https://img.shields.io/badge/Tests-7%2F7%20Passing-brightgreen.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
@@ -116,8 +116,8 @@ Haz clic en el botón **Open in Colab** al inicio de este documento y selecciona
 ### Opción B: Ejecución Local desde Terminal
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/Camilo-Alberto-Palacio/markov-traffic-simulation.git
-cd markov-traffic-simulation
+git clone https://github.com/Camilo-Alberto-Palacio/Simulacion-Trafico-Markov.git
+cd Simulacion-Trafico-Markov
 
 # 2. Crear y activar entorno virtual (recomendado)
 python -m venv venv
