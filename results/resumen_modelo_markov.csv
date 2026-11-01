@@ -1,4 +1,4 @@
-﻿Estado,Prob_Inicial,Distribucion_Estacionaria_Teorica,Distribucion_Empirica_MonteCarlo,Tiempo_Permanencia_Pasos,Tiempo_Permanencia_Minutos
-Fluido,0.7,0.31683168316831667,0.32809375,3.333333333333333,49.99999999999999
-Moderado,0.2,0.40594059405940597,0.4007395833333333,2.5,37.5
-Congestionado,0.1,0.27722772277227736,0.27116666666666667,2.857142857142857,42.85714285714286
+﻿Estado,Prob_Inicial,Distribucion_Estacionaria_Teorica,Distribucion_Empirica_MonteCarlo,Tiempo_Permanencia_Pasos,Tiempo_Permanencia_Minutos,Tiempo_Recurrencia_Minutos
+Fluido,0.7,0.31683,0.32809,3.333,50.0,47.34
+Moderado,0.2,0.40594,0.40074,2.5,37.5,36.95
+Congestionado,0.1,0.27723,0.27117,2.857,42.86,54.11

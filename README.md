@@ -1,84 +1,62 @@
-# Simulación Estocástica de Tráfico Vehicular con Modelo Oculto de Markov (HMM)
+# 🚦 Simulación Estocástica de Tráfico Vehicular con Modelo Oculto de Markov (HMM)
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/markov-traffic-simulation/blob/master/Simulacion_Markov_Trafico_Colab.ipynb)
 ![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
+![Tests](https://img.shields.io/badge/Tests-7%2F7%20Passing-brightgreen.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Course](https://img.shields.io/badge/Asignatura-Simulación-orange.svg)
-![Institution](https://img.shields.io/badge/Institución-IU%20Digital%20de%20Antioquia-blue)
+![Institution](https://img.shields.io/badge/IU%20Digital%20de%20Antioquia-Grupo%2025-1E3A8A)
 
-Este repositorio contiene la implementación matemática, computacional y experimental de un **Modelo Oculto de Markov (Hidden Markov Model - HMM)** para modelar, simular y predecir la dinámica estocástica del tráfico vehicular en un corredor urbano arterial. 
+Implementación matemática, computacional y experimental de un **Modelo Oculto de Markov (Hidden Markov Model — HMM)** de tiempo discreto para modelar, simular, filtrar e inferir la dinámica estocástica del tráfico vehicular en un corredor arterial urbano.
 
-Trabajo desarrollado para la **Actividad Didáctica 2 (Módulo 2: Distribuciones de Probabilidad y Procesos Estocásticos)**.
+Proyecto desarrollado para la **Actividad Didáctica 2 — Módulo 2: Distribuciones de Probabilidad y Procesos Estocásticos** de la asignatura **Simulación (`PREICA2602B020045`)** en la **Institución Universitaria Digital de Antioquia (IU Digital)**.
 
 ---
 
 ## 📋 Tabla de Contenidos
-- [Descripción del Problema y Justificación](#-descripción-del-problema-y-justificación)
-- [Fundamentación Matemática del HMM](#-fundamentación-matemática-del-hmm)
-  - [Estados Ocultos vs. Observaciones Visibles](#estados-ocultos-vs-observaciones-visibles)
-  - [Vector de Probabilidades Iniciales ($\pi$)](#vector-de-probabilidades-iniciales-pi)
-  - [Matriz de Transición de Estados ($A$)](#matriz-de-transición-de-estados-a)
-  - [Matriz de Emisión de Sensores ($B$)](#matriz-de-emisión-de-sensores-b)
-- [Algoritmos Implementados](#-algoritmos-implementados)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Instalación y Requisitos](#-instalación-y-requisitos)
-- [Instrucciones de Ejecución](#-instrucciones-de-ejecución)
-  - [1. Ejecución del Script Principal](#1-ejecución-del-script-principal)
-  - [2. Exploración Interactiva en Jupyter Notebook](#2-exploración-interactiva-en-jupyter-notebook)
-  - [3. Generación del Informe Oficial en Word (.docx)](#3-generación-del-informe-oficial-en-word-docx)
-- [Resultados Principales y Visualizaciones](#-resultados-principales-y-visualizaciones)
-- [Equipo de Trabajo](#-equipo-de-trabajo)
-- [Licencia](#-licencia)
+1. [Descripción del Problema y Justificación del HMM](#-descripción-del-problema-y-justificación-del-hmm)
+2. [Formulación Matemática ($\lambda = (\mathcal{S}, \mathcal{V}, \pi, A, B)$)](#-formulación-matemática)
+3. [Algoritmos Implementados](#-algoritmos-implementados)
+4. [Estructura del Repositorio](#-estructura-del-repositorio)
+5. [Instalación e Instrucciones de Ejecución](#-instalación-e-instrucciones-de-ejecución)
+6. [Resultados Principales y Visualizaciones (300 DPI)](#-resultados-principales-y-visualizaciones)
+7. [Equipo de Trabajo (Grupo 25)](#-equipo-de-trabajo-grupo-25)
+8. [Licencia](#-licencia)
 
 ---
 
-## 🚗 Descripción del Problema y Justificación
+## 🚗 Descripción del Problema y Justificación del HMM
 
-El tráfico vehicular en corredores urbanos presenta una naturaleza intrínsecamente estocástica. Las condiciones de circulación no son deterministas, sino que fluctúan por decisiones individuales, efectos acordeón de frenado, horas pico e incidentes imprevistos.
+En la gestión de Sistemas Inteligentes de Transporte (ITS) sobre arterias urbanas (p. ej., Autopista Norte / Avenida Regional en Medellín), existe una separación física intrínseca entre el fenómeno vial y su telemetría:
 
-### ¿Por qué un Modelo Oculto de Markov (HMM)?
-En la realidad del monitoreo vial existen dos capas fundamentales:
-1. **La Condición Macroscópica Real (Estado Oculto - Latente):** El nivel de servicio o grado de congestión global de una arteria vial ($Fluido$, $Moderado$, $Congestionado$) es una propiedad sistémica continua que no puede medirse de forma omnisciente ni directa en todo el corredor.
-2. **Las Mediciones de Sensores (Observaciones Visibles):** Los radares de velocidad, cámaras y espiras electromagnéticas reportan velocidades puntuales ($Alta$, $Media$, $Baja$). Estas lecturas poseen **ruido e incertidumbre**: por ejemplo, un camión pesado en una vía fluida puede generar una lectura de velocidad baja, o en un trancón severo un automóvil puede acelerar brevemente produciendo una lectura de velocidad moderada.
+1. **Capa Oculta / Latente ($X_t \in \mathcal{S}$):** El verdadero régimen macroscópico de congestión del corredor (**Fluido**, **Moderado**, **Congestionado**) es una propiedad espacialmente distribuida que **no es directamente observable** desde un punto fijo.
+2. **Capa Observable / Visible ($Y_t \in \mathcal{V}$):** Los radares Doppler y espiras inductivas reportan mediciones puntuales discretizadas (**Velocidad Alta**, **Velocidad Media**, **Velocidad Baja**) contaminadas con **ruido instrumental y varianza microscópica** (p. ej., un vehículo pesado frenando en vía fluida o una aceleración momentánea entre colas dentro de un embotellamiento).
 
-El HMM desacopla el estado físico real de las evidencias ruidosas de los sensores, permitiendo reconstruir la trayectoria más probable del tráfico mediante inferencia probabilística.
+![Arquitectura del Modelo Oculto de Markov](results/fig0_diagrama_estructura_hmm.png)
+
+Un clasificador ingenuo sin memoria oscila erráticamente ante cada lectura atípica del sensor. El **HMM** acopla la inercia física markoviana ($A$) con el modelo de incertidumbre del sensor ($B$), reconstruyendo de forma óptima la trayectoria real del tráfico.
 
 ---
 
-## 📐 Fundamentación Matemática del HMM
+## 📐 Formulación Matemática
 
-El modelo se define formalmente mediante la tupla $\lambda = (\mathcal{S}, \mathcal{V}, \pi, A, B)$ para intervalos de tiempo $\Delta t = 15$ minutos (96 pasos por día):
+El sistema se discretiza en intervalos de $\Delta t = 15\text{ minutos}$ ($T = 96$ pasos por jornada de 24 horas) mediante la quíntupla $\lambda = (\mathcal{S}, \mathcal{V}, \pi, A, B)$:
 
-### Estados Ocultos vs. Observaciones Visibles
-* **Espacio de Estados Ocultos $\mathcal{S}$ ($N = 3$):**
-  * $S_1 = \text{Fluido}$: Flujo libre, densidad baja ($\le 15 \text{ veh/km/carril}$).
-  * $S_2 = \text{Moderado}$: Flujo continuo, densidad media ($15 - 35 \text{ veh/km/carril}$).
-  * $S_3 = \text{Congestionado}$: Saturación, régimen stop-and-go ($> 35 \text{ veh/km/carril}$).
-
-* **Espacio de Observaciones Visibles $\mathcal{V}$ ($M = 3$):**
-  * $V_1 = \text{Velocidad Alta}$: $v > 60\text{ km/h}$.
-  * $V_2 = \text{Velocidad Media}$: $30 \le v \le 60\text{ km/h}$.
-  * $V_3 = \text{Velocidad Baja}$: $v < 30\text{ km/h}$.
-
-### Vector de Probabilidades Iniciales ($\pi$)
-Distribución al iniciar la observación a las 06:00 AM:
-$$\pi = [\pi_{\text{Fluido}}, \pi_{\text{Moderado}}, \pi_{\text{Congestionado}}] = [0.70, 0.20, 0.10]$$
-
-### Matriz de Transición de Estados ($A$)
-Gobierna la inercia del tráfico entre intervalos consecutivos de 15 minutos ($a_{ij} = P(X_{t+1} = s_j \mid X_t = s_i)$):
+* **Espacio de Estados Ocultos ($\mathcal{S}$, $N = 3$):**
+  * $S_1 = \text{Fluido}$ ($k \le 15\text{ veh/km/carril}$, flujo libre).
+  * $S_2 = \text{Moderado}$ ($15 < k \le 35\text{ veh/km/carril}$, flujo estable condicionado).
+  * $S_3 = \text{Congestionado}$ ($k > 35\text{ veh/km/carril}$, saturación *stop-and-go*).
+* **Espacio de Observaciones Visibles ($\mathcal{V}$, $M = 3$):**
+  * $V_1 = \text{Velocidad Alta}$ ($v > 60\text{ km/h}$), $V_2 = \text{Velocidad Media}$ ($30 \le v \le 60\text{ km/h}$), $V_3 = \text{Velocidad Baja}$ ($v < 30\text{ km/h}$).
+* **Vector de Probabilidades Iniciales (06:00 AM):**
+  $$\pi = [0.70,\; 0.20,\; 0.10]$$
+* **Matriz de Transición de Estados ($A$) y Matriz de Emisión de Sensores ($B$):**
 
 $$A = \begin{pmatrix}
 0.70 & 0.25 & 0.05 \\
 0.20 & 0.60 & 0.20 \\
 0.05 & 0.30 & 0.65
-\end{pmatrix}$$
-
-* **Inercia temporal:** Diagonal dominante ($0.70, 0.60, 0.65$), reflejando persistencia en el estado actual.
-* **Gradualidad:** La transición directa $Fluido \to Congestionado$ es baja ($5\%$), requiriendo habitualmente pasar por $Moderado$ ($25\%$).
-
-### Matriz de Emisión de Sensores ($B$)
-Probabilidad de que el radar reporte una velocidad dada la condición real ($b_{jk} = P(Y_t = v_k \mid X_t = s_j)$):
-
-$$B = \begin{pmatrix}
+\end{pmatrix}, \qquad
+B = \begin{pmatrix}
 0.80 & 0.15 & 0.05 \\
 0.20 & 0.65 & 0.15 \\
 0.05 & 0.20 & 0.75
@@ -88,24 +66,27 @@ $$B = \begin{pmatrix}
 
 ## ⚙️ Algoritmos Implementados
 
-1. **Simulador Estocástico Monte Carlo:** Generación de secuencias temporales mediante muestreo de funciones de distribución acumulada sobre variables categóricas.
-2. **Algoritmo de Viterbi:** Programación dinámica en escala logarítmica para decodificar la secuencia óptima de estados ocultos que maximiza $P(X \mid Y, \lambda)$, evitando el subdesbordamiento numérico (underflow).
-3. **Algoritmo Forward:** Inducción escalada para calcular la verosimilitud de la secuencia de observaciones $P(Y \mid \lambda)$.
-4. **Distribución Estacionaria Teórica:** Resolución exacta del sistema lineal $(A^T - I)\pi^{*T} = 0$ con $\sum \pi^*_i = 1$.
-5. **Tiempos de Permanencia (Holding Times):** Cálculo de los tiempos continuos medios en cada estado: $E[T_i] = \frac{1}{1 - a_{ii}}$.
+1. **Validación Axiomática de Kolmogorov:** Verificación automática de no-negatividad y estocasticidad por filas ($\sum_i \pi_i = 1$, $\sum_j a_{ij} = 1$, $\sum_k b_{jk} = 1$).
+2. **Simulador Monte Carlo (`TrafficHMM.simulate`):** Generación estocástica reproducible mediante `numpy.random.default_rng` (PCG64).
+3. **Algoritmo de Viterbi en Log-Espacio (`TrafficHMM.viterbi`):** Programación dinámica $\mathcal{O}(T \cdot N^2)$ para hallar la secuencia conjunta óptima $X^*_{1:T} = \arg\max_X P(X, Y \mid \lambda)$ sin *underflow* aritmético.
+4. **Suavizado Bayesiano Forward-Backward (`TrafficHMM.forward_backward`):** Variables escaladas $\hat{\alpha}_t, \hat{\beta}_t$ para calcular la certidumbre marginal a posteriori $\gamma_t(i) = P(X_t = s_i \mid Y_{1:T}, \lambda)$ y la log-verosimilitud exacta $\ln P(Y_{1:T} \mid \lambda)$.
+5. **Análisis Ergódico Exacto:** Distribución estacionaria $\pi^* A = \pi^*$ ($\pi^* = [32/101, 41/101, 28/101]$), tiempos medios de permanencia geométrica $\mathbb{E}[T_i] = \frac{1}{1 - a_{ii}}$ y tiempos medios de retorno de Kac $\mu_i = \frac{1}{\pi^*_i}$.
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Estructura del Repositorio
 
 ```text
 .
-├── traffic_hmm/                     # Paquete principal en Python
-│   ├── __init__.py                  # Exposición de clases principales
-│   ├── model.py                     # Definición de la clase TrafficHMM
-│   ├── simulation.py                # Controlador de escenarios y Monte Carlo
-│   └── visualizations.py            # Generador de gráficos (300 DPI)
-├── results/                         # Gráficos generados y exportaciones CSV
+├── traffic_hmm/                              # Paquete modular principal en Python
+│   ├── __init__.py                           # Exportación pública de clases
+│   ├── model.py                              # Motor matemático TrafficHMM (Viterbi, Forward-Backward, pi*)
+│   ├── simulation.py                         # Escenarios 24h, Monte Carlo (1,000 réplicas) e incidentes
+│   └── visualizations.py                     # Generador de 7 figuras científicas a 300 DPI
+├── tests/                                    # Suite automatizada de pruebas unitarias
+│   └── test_hmm.py                           # 7 pruebas de invariancia, ergodicidad e inferencia
+├── results/                                  # Evidencias gráficas (300 DPI) y datos tabulares CSV
+│   ├── fig0_diagrama_estructura_hmm.png
 │   ├── fig1_matrices_transicion_emision.png
 │   ├── fig2_simulacion_jornada_24h.png
 │   ├── fig3_convergencia_distribucion_estacionaria.png
@@ -114,106 +95,87 @@ $$B = \begin{pmatrix}
 │   ├── fig6_matriz_confusion_viterbi.png
 │   ├── simulacion_jornada_24h.csv
 │   └── resumen_modelo_markov.csv
-├── main.py                          # Script principal de ejecución CLI
-├── simulacion_trafico.ipynb         # Cuaderno interactivo Jupyter
-├── generate_doc.py                  # Generador del informe Word oficial
-├── Palacios_Camilo_Markov.docx      # Informe escrito oficial entregable
-├── GUION_VIDEO_SUSTENTACION.md      # Guion y estructura para el video
-├── requirements.txt                 # Dependencias del proyecto
-└── README.md                        # Documentación del repositorio
+├── main.py                                   # Script principal CLI (ejecuta todo el pipeline)
+├── Simulacion_Markov_Trafico_Colab.ipynb     # Cuaderno auto-contenido y pre-ejecutado para Google Colab
+├── simulacion_trafico.ipynb                  # Copia sincronizada para Jupyter local
+├── create_colab_notebook.py                  # Constructor y ejecutor automático de los notebooks
+├── generate_doc.py                           # Generador automatizado del informe académico Word
+├── Palacios_Camilo_Markov.docx               # Informe escrito oficial entregable (formato IU Digital)
+├── Palacios_Camilo_Agudelo_Adriana_Markov.docx
+├── GUION_VIDEO_SUSTENTACION.md               # Guion estructurado minuto a minuto para el video
+├── requirements.txt                          # Dependencias científicas reproducibles
+├── LICENSE                                   # Licencia MIT del equipo
+└── README.md                                 # Documentación técnica del repositorio
 ```
 
 ---
 
-## 💻 Instalación y Requisitos
+## 💻 Instalación e Instrucciones de Ejecución
 
-### Requisitos Previos
-* Python 3.10 o superior instalado.
-* Git instalado.
+### Opción A: Ejecución en la Nube con 1 Clic (Google Colab)
+Haz clic en el botón **Open in Colab** al inicio de este documento y selecciona `Entorno de ejecución -> Ejecutar todas` (no requiere instalar nada localmente).
 
-### Clonar e Instalar Dependencias
+### Opción B: Ejecución Local desde Terminal
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/camilopalacios/markov-traffic-simulation.git
+git clone https://github.com/Camilo-Alberto-Palacio/markov-traffic-simulation.git
 cd markov-traffic-simulation
 
-# 2. Crear un entorno virtual (recomendado)
+# 2. Crear y activar entorno virtual (recomendado)
 python -m venv venv
+venv\Scripts\activate        # En Windows
+# source venv/bin/activate   # En Linux / macOS
 
-# En Windows:
-venv\Scripts\activate
-# En Linux/macOS:
-source venv/bin/activate
-
-# 3. Instalar dependencias requeridas
+# 3. Instalar dependencias
 pip install -r requirements.txt
-```
 
----
-
-## 🚀 Instrucciones de Ejecución
-
-### 1. Ejecución del Script Principal
-Para ejecutar la simulación completa, validar el modelo con 1,000 réplicas Monte Carlo y exportar todos los gráficos y tablas:
-
-```bash
+# 4. Ejecutar la simulación completa y regenerar CSVs + las 7 figuras a 300 DPI
 python main.py
-```
 
-**Salida en Consola:**
-* Parámetros de matrices $A$ y $B$.
-* Distribución estacionaria analítica ($\pi^*$) y tiempos de permanencia.
-* Resultados de la simulación de 24 horas y exactitud del filtro de Viterbi.
-* Validación Monte Carlo (Ley de Grandes Números y MAE).
-* Guardado automático de figuras en la carpeta `results/`.
+# 5. Ejecutar la suite de pruebas unitarias (7 verificaciones matemáticas)
+python -m unittest discover -s tests -v
 
-### 2. Exploración Interactiva en Jupyter Notebook
-Para ejecutar la simulación celda por celda de manera interactiva:
-
-```bash
-jupyter notebook simulacion_trafico.ipynb
-```
-*(O ábrelo directamente en VS Code con la extensión de Jupyter).*
-
-### 3. Generación del Informe Oficial en Word (.docx)
-El proyecto incluye un script automatizado que construye el informe oficial con formato académico, tablas estilizadas y las 6 imágenes incrustadas:
-
-```bash
+# 6. Regenerar el informe académico oficial en Word (.docx)
 python generate_doc.py
 ```
-Generará `Palacios_Camilo_Markov.docx` listo para subir a la plataforma Canvas.
 
 ---
 
 ## 📊 Resultados Principales y Visualizaciones
 
-### 1. Matrices Estocásticas de Transición y Emisión
-La diagonal principal de $A$ demuestra la inercia temporal, mientras que $B$ modela el ruido en los sensores de velocidad.
+### Síntesis Cuantitativa del Modelo
 
+| Estado Oculto | Dist. Estacionaria ($\pi^*$) | Frecuencia Monte Carlo (`96k` pasos) | Permanencia Continua $\mathbb{E}[T_i]$ | Retorno Medio de Kac ($\mu_i$) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Fluido ($S_1$)** | `31.68%` (`32/101`) | `32.81%` | `3.33` pasos (`50.0 min`) | `3.16` pasos (`47.3 min`) |
+| **Moderado ($S_2$)** | `40.59%` (`41/101`) | `40.07%` | `2.50` pasos (`37.5 min`) | `2.46` pasos (`37.0 min`) |
+| **Congestionado ($S_3$)** | `27.72%` (`28/101`) | `27.12%` | `2.86` pasos (`42.9 min`) | `3.61` pasos (`54.1 min`) |
+
+| Método de Decodificación (`1,000` Réplicas Monte Carlo) | Exactitud Media ($\pm\text{DE}$) | Conmutaciones Diarias Medias | Desempeño Operativo |
+| :--- | :---: | :---: | :--- |
+| **Sensor Crudo Sin Memoria (Baseline)** | `72.44% (±4.53%)` | `50.9` cambios/día | Sobre-oscilación severa por ruido |
+| **Algoritmo de Viterbi (Ruta MAP Global)** | **`73.07% (±5.51%)`** | **`21.5` cambios/día** | **Suprime el `57.8%` del ruido espurio** |
+| **Suavizado Forward-Backward ($\gamma_t$)** | **`74.04% (±4.95%)`** | `35.7` cambios/día | Máxima exactitud marginal (`Real = 33.7`) |
+
+---
+
+### 1. Matrices Estocásticas de Transición ($A$) y Emisión ($B$)
 ![Matrices de Transición y Emisión](results/fig1_matrices_transicion_emision.png)
 
-### 2. Serie de Tiempo de 24 Horas e Inferencia de Viterbi
-El algoritmo de Viterbi logra una exactitud de reconstrucción del **73.96%** sobre las observaciones de los sensores, actuando como un filtro estocástico que estabiliza la estimación.
-
+### 2. Jornada de 24 Horas: Viterbi, Certidumbre Posterior ($\gamma_t$) y Telemetría
 ![Simulación 24 Horas](results/fig2_simulacion_jornada_24h.png)
 
-### 3. Convergencia a la Distribución Estacionaria
-Independiente de la condición inicial (100% Fluido o 100% Congestionado), el sistema converge asintóticamente al estado estable $\pi^* = [31.68\%, 40.59\%, 27.72\%]$ en menos de 2 horas (6 a 8 pasos).
-
+### 3. Convergencia Ergódica a la Distribución Estacionaria ($\pi^*$)
 ![Convergencia Estacionaria](results/fig3_convergencia_distribucion_estacionaria.png)
 
-### 4. Validación Monte Carlo (1,000 Réplicas / 96,000 Intervalos)
-Confirmación empírica de la Ley de los Grandes Números con un Error Absoluto Medio (MAE) inferior a **0.0075** frente a la distribución teórica.
-
+### 4. Validación Monte Carlo (`1,000` Réplicas = `96,000` Pasos, $\text{MAE} = 0.0075$)
 ![Validación Monte Carlo](results/fig4_validacion_monte_carlo.png)
 
-### 5. Resiliencia ante Accidentes o Lluvia Extrema
-Simulación de perturbación exógena forzada entre los pasos 32 y 44 (14:00 a 17:00). Se evidencia la rápida detección del colapso vial y la curva de recuperación paulatina.
-
+### 5. Contingencia por Accidente Vial (`14:00 – 17:00`) y Disipación de Cola
 ![Escenario de Incidente](results/fig5_escenario_incidente_recuperacion.png)
 
-### 6. Matriz de Confusión de Inferencia
-Cero confusiones críticas entre estados extremos (nunca se clasifica congestión severa como flujo libre).
+### 6. Matriz de Confusión Normalizada por Sensibilidad
+Registra **`0.0%` de falsos negativos críticos** en episodios reales de congestión (`Congestionado -> Fluido = 0/19`), garantizando seguridad operativa para el control semafórico.
 
 ![Matriz de Confusión](results/fig6_matriz_confusion_viterbi.png)
 
@@ -227,20 +189,12 @@ Cero confusiones críticas entre estados extremos (nunca se clasifica congestió
 * **Ruben Dario Jaramillo Cervantes**
 
 **Docente:** Julian Andres Loaiza Lopez  
-**Asignatura:** Simulación - PREICA2602B020045  
-**Institución:** Institución Universitaria Digital de Antioquia (IU Digital)  
-**Fecha:** Noviembre de 2026
-
----
-
-## 🌐 Google Colab
-
-El proyecto incluye un cuaderno completamente autocontenido listo para ejecutarse en la nube:
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/markov-traffic-simulation/blob/main/Simulacion_Markov_Trafico_Colab.ipynb)
+**Asignatura:** Simulación — `PREICA2602B020045`  
+**Institución:** Institución Universitaria Digital de Antioquia (IU Digital) — Facultad de Ingeniería  
+**Sede y Fecha:** Medellín, Antioquia · Noviembre de 2026
 
 ---
 
 ## 📄 Licencia
 
-Este proyecto está distribuido bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Distribuido bajo la licencia **MIT**. Consulta el archivo [`LICENSE`](LICENSE) para más detalles.
