@@ -34,18 +34,18 @@ def code_cell(code: str) -> dict:
 
 cells = [
     md_cell(
-        """# 🚦 Simulación Estocástica de Tráfico Vehicular mediante un Modelo Oculto de Markov (HMM)
+        """# Simulación Estocástica de Tráfico Vehicular mediante un Modelo Oculto de Markov (HMM)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/Simulacion-Trafico-Markov/blob/main/Simulacion_Markov_Trafico_Colab.ipynb)
 
 ---
-### 🏛️ Institución Universitaria Digital de Antioquia (IU Digital)
+### Institución Universitaria Digital de Antioquia (IU Digital)
 - **Facultad:** Facultad de Ingeniería — Ingeniería de Software y Datos  
 - **Asignatura:** Simulación — `PREICA2602B020045` (Módulo 2 — Actividad Didáctica 2)  
 - **Docente:** Julian Andres Loaiza Lopez  
 - **Grupo:** 25 | **Sede:** Medellín, Antioquia | **Fecha:** Noviembre de 2026  
 
-#### 👥 Integrantes del Equipo:
+#### Integrantes del Equipo:
 1. **Adriana Andrea Agudelo Agudelo**
 2. **Camilo Alberto Palacios Turriago**
 3. **Juan Daniel Pulgarin García**
@@ -54,7 +54,7 @@ cells = [
 ---"""
     ),
     md_cell(
-        r"""## 🎯 1. Formulación Matemática y Pertinencia del Modelo Oculto de Markov (HMM)
+        r"""## 1. Formulación Matemática y Pertinencia del Modelo Oculto de Markov (HMM)
 
 En un corredor arterial urbano (p. ej., Autopista Norte / Avenida Regional en Medellín), el **régimen macroscópico real del flujo vehicular** es una variable física espacialmente distribuida que **no es directamente observable** en su totalidad por un sensor puntual. Formalizamos el fenómeno mediante la quíntupla canónica $\lambda = (\mathcal{S}, \mathcal{V}, \boldsymbol{\pi}, A, B)$:
 
@@ -83,7 +83,7 @@ print("[OK] Entorno científico cargado correctamente (NumPy, Pandas, Matplotlib
     ),
     md_cell(
         r"""---
-## ⚙️ 2. Implementación Completa de la Clase `TrafficHMM`
+## 2. Implementación Completa de la Clase `TrafficHMM`
 
 Implementamos la clase `TrafficHMM` de forma totalmente auto-contenida para ejecución directa en Google Colab, incluyendo:
 - Validación de matrices estocásticas ($\sum_i \pi_i = 1$, $\sum_j a_{ij} = 1$, $\sum_k b_{jk} = 1$).
@@ -227,7 +227,7 @@ print("[OK] Modelo TrafficHMM instanciado y validado estocásticamente.")"""
     ),
     md_cell(
         """---
-## 🕸️ 3. Arquitectura Gráfica del HMM y Propiedades Analíticas Estacionarias
+## 3. Arquitectura Gráfica del HMM y Propiedades Analíticas Estacionarias
 
 Visualizamos primero el grafo dirigido bipartito que distingue explícitamente la **Capa Oculta** ($X_t$: cadena de Markov con transiciones $a_{ij}$) de la **Capa Observable** ($Y_t$: emisiones sensoriales $b_{jk}$), seguido del cálculo analítico exacto del régimen estacionario."""
     ),
@@ -398,7 +398,7 @@ plt.show()"""
     ),
     md_cell(
         r"""---
-## 🕒 4. Simulación de una Jornada de 24 Horas (96 Intervalos) e Inferencia Bayesiana
+## 4. Simulación de una Jornada de 24 Horas (96 Intervalos) e Inferencia Bayesiana
 
 Simulamos 96 intervalos consecutivos de 15 minutos (`06:00` a `05:45`, semilla `seed=42`). Comparamos:
 1. **Sensor Crudo Sin Memoria** ($\hat{X}_t = \arg\max_i B_{i, Y_t}$), que oscila erráticamente ante cada lectura atípica del radar.
@@ -515,7 +515,7 @@ plt.show()"""
     ),
     md_cell(
         r"""---
-## 🎲 5. Validación Monte Carlo (1,000 Réplicas = 96,000 Intervalos)
+## 5. Validación Monte Carlo (1,000 Réplicas = 96,000 Intervalos)
 
 Ejecutamos **1,000 jornadas independientes** (equivalentes a ~2.74 años de operación continua) con la secuencia reproducible `seed=100` para:
 1. Comprobar empíricamente la **Ley Fuerte de los Grandes Números para Cadenas Ergódicas** ($\hat{\boldsymbol{\pi}} \to \boldsymbol{\pi}^*$).
@@ -614,7 +614,7 @@ plt.show()"""
     ),
     md_cell(
         r"""---
-## 🚨 6. Escenario de Contingencia Operativa (Accidente Vial 14:00 – 17:00)
+## 6. Escenario de Contingencia Operativa (Accidente Vial 14:00 – 17:00)
 
 Evaluamos la capacidad de detección temprana y resiliencia del corredor introduciendo un siniestro vial exógeno entre los pasos `32` (`14:00`) y `44` (`17:00`), donde la persistencia en congestión sube temporalmente a $a^{\text{inc}}_{33} = 0.80$, mientras el decodificador opera con su parametrización nominal."""
     ),
@@ -667,7 +667,7 @@ plt.show()"""
     ),
     md_cell(
         r"""---
-## 🏆 7. Conclusiones Cuantitativas
+## 7. Conclusiones Cuantitativas
 
 1. **Idoneidad Estructural del HMM:** El desacoplamiento entre la dinámica física oculta ($A$) y la incertidumbre instrumental del radar ($B$) captura con fidelidad la operación real de un Sistema Inteligente de Transporte (ITS).
 2. **Superioridad Estadística y Filtrado de Ruido:** En 1,000 réplicas Monte Carlo (96,000 intervalos), la inferencia bayesiana supera sistemáticamente al sensor crudo sin memoria (**74.04%** Forward-Backward y **73.07%** Viterbi frente a **72.44%** del sensor crudo), reduciendo además las **conmutaciones espurias diarias de 50.9 a 21.5 (-57.8%)** y logrando **0.0% de falsos negativos críticos** en episodios reales de congestión (`Congestionado -> Fluido = 0/19`).

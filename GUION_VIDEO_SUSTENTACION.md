@@ -1,10 +1,10 @@
-# 🎥 GUION Y GUÍA OFICIAL PARA EL VIDEO DE SUSTENTACIÓN
+# GUION Y GUÍA OFICIAL PARA EL VIDEO DE SUSTENTACIÓN
 ## Actividad Didáctica 2 — Módulo 2: Simulación de Procesos Estocásticos
 ### Tema: Modelo Oculto de Markov (HMM) para Estimación y Predicción del Tráfico Vehicular Urbano
 
 ---
 
-## 📌 1. Ficha Técnica de Grabación
+## 1. Ficha Técnica de Grabación
 * **Duración objetivo:** **6:00 a 7:00 minutos** (cumple con holgura todos los criterios de la rúbrica sin exceder el tiempo).
 * **Herramienta sugerida:** Microsoft Teams, Google Meet, Zoom o OBS Studio.
 * **Formato de entrega:** Enlace público o *No listado (Unlisted)* en YouTube / Google Drive (con permiso *"Cualquier persona con el enlace puede ver"*), incluido en la entrega de Canvas.
@@ -12,7 +12,7 @@
 
 ---
 
-## 👥 2. Distribución Equitativa de Roles (Grupo 25)
+## 2. Distribución Equitativa de Roles (Grupo 25)
 
 | Bloque | Tiempo | Integrante Responsable | Ejes de la Rúbrica Cubiertos |
 | :--- | :---: | :--- | :--- |
@@ -23,9 +23,9 @@
 
 ---
 
-## 🎬 3. Guion Paso a Paso por Bloques
+## 3. Guion Paso a Paso por Bloques
 
-### 🕒 [0:00 – 1:25] Bloque 1: Problema Planteado y Justificación del Modelo Oculto de Markov
+### [0:00 – 1:25] Bloque 1: Problema Planteado y Justificación del Modelo Oculto de Markov
 **Expone:** Adriana Andrea Agudelo Agudelo  
 **Mostrar en pantalla:** Portada de `Palacios_Camilo_Markov.docx` y luego `results/fig0_diagrama_estructura_hmm.png`.
 
@@ -39,7 +39,7 @@
 
 ---
 
-### 🕒 [1:25 – 2:50] Bloque 2: Significado y Justificación de $\pi$, Matriz $A$ y Matriz $B$
+### [1:25 – 2:50] Bloque 2: Significado y Justificación de $\pi$, Matriz $A$ y Matriz $B$
 **Expone:** Camilo Alberto Palacios Turriago  
 **Mostrar en pantalla:** `results/fig1_matrices_transicion_emision.png`.
 
@@ -53,7 +53,7 @@
 
 ---
 
-### 🕒 [2:50 – 4:25] Bloque 3: Demostración en Vivo en Python y Google Colab
+### [2:50 – 4:25] Bloque 3: Demostración en Vivo en Python y Google Colab
 **Expone:** Juan Daniel Pulgarin García  
 **Mostrar en pantalla:** Terminal ejecutando `python main.py` (y `python -m unittest discover -s tests -v`) + vista rápida de `Simulacion_Markov_Trafico_Colab.ipynb`.
 
@@ -66,7 +66,7 @@
 
 ---
 
-### 🕒 [4:25 – 6:15] Bloque 4: Análisis de Resultados Gráficos y Conclusiones
+### [4:25 – 6:15] Bloque 4: Análisis de Resultados Gráficos y Conclusiones
 **Expone:** Ruben Dario Jaramillo Cervantes  
 **Mostrar en pantalla:** `fig2_simulacion_jornada_24h.png`, `fig6_matriz_confusion_viterbi.png`, `fig3_convergencia_distribucion_estacionaria.png` y `fig5_escenario_incidente_recuperacion.png`.
 

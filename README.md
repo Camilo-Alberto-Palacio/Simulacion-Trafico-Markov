@@ -1,4 +1,4 @@
-# 🚦 Simulación Estocástica de Tráfico Vehicular con Modelo Oculto de Markov (HMM)
+# Simulación Estocástica de Tráfico Vehicular con Modelo Oculto de Markov (HMM)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/Simulacion-Trafico-Markov/blob/main/Simulacion_Markov_Trafico_Colab.ipynb)
 ![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
@@ -12,19 +12,19 @@ Proyecto desarrollado para la **Actividad Didáctica 2 — Módulo 2: Distribuci
 
 ---
 
-## 📋 Tabla de Contenidos
-1. [Descripción del Problema y Justificación del HMM](#-descripción-del-problema-y-justificación-del-hmm)
-2. [Formulación Matemática ($\lambda = (\mathcal{S}, \mathcal{V}, \pi, A, B)$)](#-formulación-matemática)
-3. [Algoritmos Implementados](#-algoritmos-implementados)
-4. [Estructura del Repositorio](#-estructura-del-repositorio)
-5. [Instalación e Instrucciones de Ejecución](#-instalación-e-instrucciones-de-ejecución)
-6. [Resultados Principales y Visualizaciones (300 DPI)](#-resultados-principales-y-visualizaciones)
-7. [Equipo de Trabajo (Grupo 25)](#-equipo-de-trabajo-grupo-25)
-8. [Licencia](#-licencia)
+## Tabla de Contenidos
+1. [Descripción del Problema y Justificación del HMM](#descripción-del-problema-y-justificación-del-hmm)
+2. [Formulación Matemática](#formulación-matemática)
+3. [Algoritmos Implementados](#algoritmos-implementados)
+4. [Estructura del Repositorio](#estructura-del-repositorio)
+5. [Instalación e Instrucciones de Ejecución](#instalación-e-instrucciones-de-ejecución)
+6. [Resultados Principales y Visualizaciones](#resultados-principales-y-visualizaciones)
+7. [Equipo de Trabajo (Grupo 25)](#equipo-de-trabajo-grupo-25)
+8. [Licencia](#licencia)
 
 ---
 
-## 🚗 Descripción del Problema y Justificación del HMM
+## Descripción del Problema y Justificación del HMM
 
 En la gestión de Sistemas Inteligentes de Transporte (ITS) sobre arterias urbanas (p. ej., Autopista Norte / Avenida Regional en Medellín), existe una separación física intrínseca entre el fenómeno vial y su telemetría:
 
@@ -37,7 +37,7 @@ Un clasificador ingenuo sin memoria oscila erráticamente ante cada lectura atí
 
 ---
 
-## 📐 Formulación Matemática
+## Formulación Matemática
 
 El sistema se discretiza en intervalos de $\Delta t = 15\text{ minutos}$ ($T = 96$ pasos por jornada de 24 horas) mediante la quíntupla $\lambda = (\mathcal{S}, \mathcal{V}, \pi, A, B)$:
 
@@ -64,7 +64,7 @@ B = \begin{pmatrix}
 
 ---
 
-## ⚙️ Algoritmos Implementados
+## Algoritmos Implementados
 
 1. **Validación Axiomática de Kolmogorov:** Verificación automática de no-negatividad y estocasticidad por filas ($\sum_i \pi_i = 1$, $\sum_j a_{ij} = 1$, $\sum_k b_{jk} = 1$).
 2. **Simulador Monte Carlo (`TrafficHMM.simulate`):** Generación estocástica reproducible mediante `numpy.random.default_rng` (PCG64).
@@ -74,7 +74,7 @@ B = \begin{pmatrix}
 
 ---
 
-## 📂 Estructura del Repositorio
+## Estructura del Repositorio
 
 ```text
 .
@@ -108,7 +108,7 @@ B = \begin{pmatrix}
 
 ---
 
-## 💻 Instalación e Instrucciones de Ejecución
+## Instalación e Instrucciones de Ejecución
 
 ### Opción A: Ejecución en la Nube con 1 Clic (Google Colab)
 Haz clic en el botón **Open in Colab** al inicio de este documento y selecciona `Entorno de ejecución -> Ejecutar todas` (no requiere instalar nada localmente).
@@ -139,7 +139,7 @@ python generate_doc.py
 
 ---
 
-## 📊 Resultados Principales y Visualizaciones
+## Resultados Principales y Visualizaciones
 
 ### Síntesis Cuantitativa del Modelo
 
@@ -179,7 +179,7 @@ Registra **`0.0%` de falsos negativos críticos** en episodios reales de congest
 
 ---
 
-## 👥 Equipo de Trabajo (Grupo 25)
+## Equipo de Trabajo (Grupo 25)
 
 * **Adriana Andrea Agudelo Agudelo**
 * **Camilo Alberto Palacios Turriago**
@@ -193,6 +193,6 @@ Registra **`0.0%` de falsos negativos críticos** en episodios reales de congest
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 Distribuido bajo la licencia **MIT**. Consulta el archivo [`LICENSE`](LICENSE) para más detalles.
