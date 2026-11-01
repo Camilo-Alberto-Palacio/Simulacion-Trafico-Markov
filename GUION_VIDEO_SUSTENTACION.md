@@ -27,7 +27,7 @@
 
 ### [0:00 – 1:25] Bloque 1: Problema Planteado y Justificación del Modelo Oculto de Markov
 **Expone:** Adriana Andrea Agudelo Agudelo  
-**Mostrar en pantalla:** Portada de `Palacios_Camilo_Markov.docx` y luego `results/fig0_diagrama_estructura_hmm.png`.
+**Mostrar en pantalla:** Portada de `Evidencia de Aprendizaje 2 - Módulo 2. Actividad didáctica 2 - Modelo de Markov.docx` y luego `results/fig0_diagrama_estructura_hmm.png`.
 
 > *"Cordial saludo profesor Julian Andres Loaiza. Somos el Grupo 25 de la asignatura Simulación en la IU Digital de Antioquia, conformado por Adriana Agudelo, Camilo Palacios, Juan Daniel Pulgarin y Ruben Dario Jaramillo.*
 >

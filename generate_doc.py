@@ -206,7 +206,7 @@ def load_sample_rows_from_csv(csv_path: str = "results/simulacion_jornada_24h.cs
     return rows
 
 
-def build_document(output_filename: str = "Palacios_Camilo_Markov.docx") -> None:
+def build_document(output_filename: str = "Evidencia de Aprendizaje 2 - Módulo 2. Actividad didáctica 2 - Modelo de Markov.docx") -> None:
     doc = Document()
 
     for section in doc.sections:
@@ -869,7 +869,7 @@ def build_document(output_filename: str = "Palacios_Camilo_Markov.docx") -> None
             ],
             [
                 "Informe Escrito Oficial",
-                "Palacios_Camilo_Markov.docx",
+                "Evidencia de Aprendizaje 2 - Módulo 2. Actividad didáctica 2 - Modelo de Markov.docx",
                 "Documento estructurado (Introducción, Metodología, Resultados y Conclusiones) generado con generate_doc.py."
             ],
             [
@@ -915,4 +915,4 @@ def build_document(output_filename: str = "Palacios_Camilo_Markov.docx") -> None
 
 
 if __name__ == "__main__":
-    build_document("Palacios_Camilo_Markov.docx")
+    build_document("Evidencia de Aprendizaje 2 - Módulo 2. Actividad didáctica 2 - Modelo de Markov.docx")
