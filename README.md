@@ -97,11 +97,9 @@ B = \begin{pmatrix}
 │   └── resumen_modelo_markov.csv
 ├── main.py                                   # Script principal CLI (ejecuta todo el pipeline)
 ├── Simulacion_Markov_Trafico_Colab.ipynb     # Cuaderno auto-contenido y pre-ejecutado para Google Colab
-├── simulacion_trafico.ipynb                  # Copia sincronizada para Jupyter local
-├── create_colab_notebook.py                  # Constructor y ejecutor automático de los notebooks
+├── create_colab_notebook.py                  # Constructor y ejecutor automático del notebook
 ├── generate_doc.py                           # Generador automatizado del informe académico Word
 ├── Palacios_Camilo_Markov.docx               # Informe escrito oficial entregable (formato IU Digital)
-├── Palacios_Camilo_Agudelo_Adriana_Markov.docx
 ├── GUION_VIDEO_SUSTENTACION.md               # Guion estructurado minuto a minuto para el video
 ├── requirements.txt                          # Dependencias científicas reproducibles
 ├── LICENSE                                   # Licencia MIT del equipo

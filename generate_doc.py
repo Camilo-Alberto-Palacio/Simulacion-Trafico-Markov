@@ -916,4 +916,3 @@ def build_document(output_filename: str = "Palacios_Camilo_Markov.docx") -> None
 
 if __name__ == "__main__":
     build_document("Palacios_Camilo_Markov.docx")
-    build_document("Palacios_Camilo_Agudelo_Adriana_Markov.docx")

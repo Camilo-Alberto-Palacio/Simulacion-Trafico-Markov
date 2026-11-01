@@ -1,7 +1,6 @@
 """
 Generador y Ejecutor del Cuaderno Interactivo para Google Colab:
   - Simulacion_Markov_Trafico_Colab.ipynb
-  - simulacion_trafico.ipynb
 
 Totalmente auto-contenido (no requiere archivos externos), sincronizado exactamente
 con los parámetros, semillas y algoritmos de traffic_hmm, y pre-ejecutado con ipykernel
@@ -764,7 +763,7 @@ colab_notebook = {
     "nbformat_minor": 4,
 }
 
-for fname in ("Simulacion_Markov_Trafico_Colab.ipynb", "simulacion_trafico.ipynb"):
-    with open(fname, "w", encoding="utf-8") as f:
-        json.dump(colab_notebook, f, indent=2, ensure_ascii=False)
-    print(f"[OK] Cuaderno generado y pre-ejecutado: {fname}")
+colab_filename = "Simulacion_Markov_Trafico_Colab.ipynb"
+with open(colab_filename, "w", encoding="utf-8") as f:
+    json.dump(colab_notebook, f, indent=2, ensure_ascii=False)
+print(f"[OK] Cuaderno generado y pre-ejecutado: {colab_filename}")
