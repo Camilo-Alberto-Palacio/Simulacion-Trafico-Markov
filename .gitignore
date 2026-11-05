@@ -46,3 +46,13 @@ Desktop.ini
 ~$*.docx
 ~$*.doc
 *Articulo Q1*.docx
+
+# Scripts internos de generación de documentos y cuadernos
+generate_doc.py
+create_colab_notebook.py
+
+# Transcripciones de clases y material de Canvas
+*transcripci*
+*Sesión*
+*Sesion*
+*.pdf
