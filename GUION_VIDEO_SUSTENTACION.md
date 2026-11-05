@@ -1,80 +1,83 @@
-# GUION Y GUÍA OFICIAL PARA EL VIDEO DE SUSTENTACIÓN
-## Actividad Didáctica 2 — Módulo 2: Simulación de Procesos Estocásticos
-### Tema: Modelo Oculto de Markov (HMM) para Estimación y Predicción del Tráfico Vehicular Urbano
+# GUION OFICIAL DEL VIDEO PITCH (ELEVATOR PITCH DE INVESTIGACIÓN)
+## Actividad Didáctica 2 — Módulo 2: Simulación de Procesos Estocásticos (Modelo Oculto de Markov - HMM)
+
+* **Institución:** Institución Universitaria Digital de Antioquia (IU Digital) — Facultad de Ingeniería
+* **Asignatura:** Simulación (`PREICA2602B020045`) — Grupo 25
+* **Docente Catedrático:** Julian Andres Loaiza Lopez
+* **Modalidad:** 1 Solo Presentador / Portavoz (a nombre del Grupo 25)
+* **Integrantes del Equipo:** Adriana Agudelo, Camilo Palacios, Juan Daniel Pulgarin y Ruben Jaramillo
+* **Duración Total:** **2 minutos y 30 segundos (Límite estricto: Máximo 3:00 minutos)**
+* **Formato:** Video horizontal (16:9), 1080p, audio nítido sin música de fondo
+* **Recurso Visual:** Presentador en cámara web (esquina) + pantalla compartida mostrando las gráficas de `results/` o el Google Colab
 
 ---
 
-## 1. Ficha Técnica de Grabación
-* **Duración objetivo:** **6:00 a 7:00 minutos** (cumple con holgura todos los criterios de la rúbrica sin exceder el tiempo).
-* **Herramienta sugerida:** Microsoft Teams, Google Meet, Zoom o OBS Studio.
-* **Formato de entrega:** Enlace público o *No listado (Unlisted)* en YouTube / Google Drive (con permiso *"Cualquier persona con el enlace puede ver"*), incluido en la entrega de Canvas.
-* **Recomendación visual:** Cámara encendida de los integrantes y pantalla compartida alternando entre las figuras de `results/`, la terminal ejecutando `python main.py` y el cuaderno interactivo `Simulacion_Markov_Trafico_Colab.ipynb`.
+### ESTRUCTURA OBLIGATORIA DEL PITCH (Página 6 de la Guía Oficial)
+
+```
+[0:00 - 0:15]  1. Gancho: El problema del tráfico y los sensores ruidosos
+[0:15 - 0:40]  2. Motivación e Impacto: Costos de la congestión e inestabilidad en ITS
+[0:40 - 1:10]  3. Solución Propuesta: El Modelo Oculto de Markov (HMM)
+[1:10 - 1:25]  4. Metodología en 1 frase: Discretización, Viterbi y Monte Carlo
+[1:25 - 1:55]  5. Resultados Clave: 74% de exactitud, -60% de ruido y 0% falsos negativos
+[1:55 - 2:15]  6. Aporte (¿Por qué merece publicarse en Q1?): Rigor y reproducibilidad
+[2:15 - 2:30]  7. Cierre: Repositorio GitHub, Google Colab y despedida
+```
 
 ---
 
-## 2. Distribución Equitativa de Roles (Grupo 25)
+## 🎬 GUION COMPLETO PASO A PASO (TEXTO EXACTO PARA LEER)
 
-| Bloque | Tiempo | Integrante Responsable | Ejes de la Rúbrica Cubiertos |
-| :--- | :---: | :--- | :--- |
-| **Bloque 1** | `0:00 – 1:25` | **Adriana Andrea Agudelo Agudelo** | Formulación del problema, fenómeno vial y distinción Estado Oculto vs. Observación Visible. |
-| **Bloque 2** | `1:25 – 2:50` | **Camilo Alberto Palacios Turriago** | Construcción, axiomas estocásticos y justificación física de $\pi$, $A$ y $B$. |
-| **Bloque 3** | `2:50 – 4:25` | **Juan Daniel Pulgarin García** | Demostración en vivo en Python / Google Colab, Viterbi, Forward-Backward y Monte Carlo. |
-| **Bloque 4** | `4:25 – 6:15` | **Ruben Dario Jaramillo Cervantes** | Análisis de resultados gráficos, matriz de confusión, contingencia vial y conclusiones. |
+> **[0:00 – 0:15] FASE 1: EL GANCHO (15 segundos)**  
+> *(En pantalla: Cámara encendida del presentador + imagen de congestión o Autopista Norte)*  
+>  
+> *"¿Sabían que los sensores de velocidad en nuestras ciudades se equivocan hasta en un 35% de sus lecturas debido al ruido del tráfico? Un solo camión frenando en vía libre puede hacer que el sistema crea que hay un trancón gigante donde no lo hay."*
 
 ---
 
-## 3. Guion Paso a Paso por Bloques
-
-### [0:00 – 1:25] Bloque 1: Problema Planteado y Justificación del Modelo Oculto de Markov
-**Expone:** Adriana Andrea Agudelo Agudelo  
-**Mostrar en pantalla:** Portada de `Evidencia de Aprendizaje 2 - Módulo 2. Actividad didáctica 2 - Modelo de Markov.docx` y luego `results/fig0_diagrama_estructura_hmm.png`.
-
-> *"Cordial saludo profesor Julian Andres Loaiza. Somos el Grupo 25 de la asignatura Simulación en la IU Digital de Antioquia, conformado por Adriana Agudelo, Camilo Palacios, Juan Daniel Pulgarin y Ruben Dario Jaramillo.*
->
-> *En esta actividad implementamos un **Modelo Oculto de Markov (HMM)** para simular e inferir el tráfico vehicular en un corredor arterial urbano como la Autopista Norte en Medellín, discretizado en intervalos de 15 minutos (96 pasos por día).*
->
-> *¿Por qué un Modelo Oculto de Markov y no una cadena simple? Como vemos en nuestro diagrama de arquitectura (`fig0`), en la movilidad urbana existen dos capas distintas:*
-> *1. Una **Capa Oculta o Latente ($X_t$)**, que es el estado macroscópico real de todo el corredor: **Fluido**, **Moderado** o **Congestionado**, el cual no puede observarse directamente desde un solo punto.*
-> *2. Una **Capa Observable ($Y_t$)**, compuesta por las lecturas puntuales de radares Doppler: **Velocidad Alta**, **Media** o **Baja**. Estas mediciones contienen ruido: por ejemplo, un camión pesado frenando en vía libre genera una lectura baja sin que exista trancón. El HMM desacopla ese ruido instrumental de la dinámica física real."*
+> **[0:15 – 0:40] FASE 2: MOTIVACIÓN E IMPACTO (25 segundos)**  
+> *(En pantalla: Diagrama de arquitectura `results/fig0_diagrama_estructura_hmm.png`)*  
+>  
+> *"Un cordial saludo, profesor Julian Loaiza. A nombre del **Grupo 25**, conformado por Adriana Agudelo, Juan Daniel Pulgarin, Ruben Jaramillo y quien les habla, Camilo Palacios, abordamos este grave problema. En arterias como la Autopista Norte en Medellín, las falsas alarmas de los radares provocan que los semáforos inteligentes cambien de plan caóticamente cada 15 minutos, disparando las emisiones y los tiempos de viaje."*
 
 ---
 
-### [1:25 – 2:50] Bloque 2: Significado y Justificación de $\pi$, Matriz $A$ y Matriz $B$
-**Expone:** Camilo Alberto Palacios Turriago  
-**Mostrar en pantalla:** `results/fig1_matrices_transicion_emision.png`.
-
-> *"Para parametrizar formalmente la quíntupla $\lambda = (\mathcal{S}, \mathcal{V}, \pi, A, B)$, verificamos que todas las distribuciones cumplan los axiomas estocásticos de Kolmogorov (no negatividad y suma por fila igual a 1):*
->
-> *Primero, el **Vector Inicial $\pi = [0.70, 0.20, 0.10]$** representa el arranque operativo a las 06:00 de la mañana, donde predomina el flujo libre con un 70%.*
->
-> *Segundo, la **Matriz de Transición $A$** modela la evolución entre cuartos de hora consecutivos. Su diagonal principal concentra las mayores probabilidades ($0.70$, $0.60$ y $0.65$), capturando la **inercia hidrodinámica del tráfico**. Además, los saltos extremos directos entre Fluido y Congestionado tienen apenas un $5\%$ de probabilidad ($a_{13} = a_{31} = 0.05$), pues físicamente la congestión se forma y se disipa de manera gradual pasando por el estado Moderado.*
->
-> *Tercero, la **Matriz de Emisión $B$** cuantifica la confiabilidad del radar: acierta el $80\%$ en estado Fluido, $65\%$ en Moderado y $75\%$ en Congestionado, dejando entre un $20\%$ y un $35\%$ de emisiones cruzadas que modelan el ruido real de telemetría."*
+> **[0:40 – 1:10] FASE 3: SOLUCIÓN PROPUESTA (30 segundos)**  
+> *(En pantalla: Mapas de calor de matrices `results/fig1_matrices_transicion_emision.png`)*  
+>  
+> *"Nuestra solución es formular e implementar un **Modelo Oculto de Markov (HMM)**. En lugar de confiar ciegamente en la lectura aislada del sensor, el modelo separa la realidad física de la vía en tres estados latentes: Fluido, Moderado y Congestionado, y los acopla probabilísticamente con las lecturas ruidosas mediante una matriz de transición que captura la inercia real del flujo vehicular."*
 
 ---
 
-### [2:50 – 4:25] Bloque 3: Demostración en Vivo en Python y Google Colab
-**Expone:** Juan Daniel Pulgarin García  
-**Mostrar en pantalla:** Terminal ejecutando `python main.py` (y `python -m unittest discover -s tests -v`) + vista rápida de `Simulacion_Markov_Trafico_Colab.ipynb`.
-
-> *"Pasamos a la demostración computacional. Estructuramos el paquete modular `traffic_hmm` en Python con pruebas unitarias automatizadas y un cuaderno interactivo en Google Colab.*
->
-> *Al ejecutar `python main.py` en vivo observamos cinco etapas:*
-> *- Primero, resuelve algebraicamente el sistema lineal estacionario $\pi^* A = \pi^*$, hallando el equilibrio exacto: **31.68% Fluido**, **40.59% Moderado** y **27.72% Congestionado**, con tiempos continuos esperados de permanencia de **50.0 minutos en Fluido**, **37.5 en Moderado** y **42.9 minutos continuos cuando se instala una congestión**.*
-> *- Segundo, simula una jornada completa de 24 horas (96 intervalos) y aplica tanto el **Algoritmo de Viterbi** en escala logarítmica como el suavizado bayesiano **Forward-Backward**, alcanzando un **73.96% de exactitud** y reduciendo las oscilaciones ruidosas del sensor de **53 a solo 21 cambios** en el día.*
-> *- Tercero, ejecuta **1,000 réplicas Monte Carlo** (96,000 intervalos), comprobando la Ley de los Grandes Números con un **Error Absoluto Medio de apenas 0.0075** y confirmando que los decodificadores bayesianos superan sistemáticamente al sensor crudo sin memoria."*
+> **[1:10 – 1:25] FASE 4: METODOLOGÍA EN UNA FRASE (15 segundos)**  
+> *(En pantalla: Gráfica de 24 horas `results/fig2_simulacion_jornada_24h.png`)*  
+>  
+> *"Modelamos jornadas completas en intervalos de 15 minutos utilizando el **Algoritmo de Viterbi** para reconstruir la ruta óptima del tráfico y validamos el sistema con **1,000 réplicas Monte Carlo** en Python."*
 
 ---
 
-### [4:25 – 6:15] Bloque 4: Análisis de Resultados Gráficos y Conclusiones
-**Expone:** Ruben Dario Jaramillo Cervantes  
-**Mostrar en pantalla:** `fig2_simulacion_jornada_24h.png`, `fig6_matriz_confusion_viterbi.png`, `fig3_convergencia_distribucion_estacionaria.png` y `fig5_escenario_incidente_recuperacion.png`.
+> **[1:25 – 1:55] FASE 5: RESULTADOS CLAVE (30 segundos)**  
+> *(En pantalla: Matriz de confusión `results/fig6_matriz_confusion_viterbi.png` y Monte Carlo `results/fig4_validacion_monte_carlo.png`)*  
+>  
+> *"Los resultados son contundentes: nuestro HMM alcanza un **74% de exactitud**, pero lo más importante: **reduce en un 60.4% las conmutaciones erráticas del radar**, bajando de 53 falsos cambios a solo 21 por día. Además, en la matriz de confusión logramos **cero por ciento de falsos negativos críticos**: ningún embotellamiento real fue clasificado como vía libre, garantizando total seguridad operativa."*
 
-> *"Al analizar nuestras visualizaciones científicas destacamos cuatro hallazgos clave:*
->
-> *1. En la **Serie de 24 Horas (`fig2`)**, vemos cómo Viterbi y las probabilidades posteriores $\gamma_t$ actúan como un filtro estocástico robusto, suprimiendo casi el 60% del parpadeo errático de los radares.*
-> *2. En la **Matriz de Confusión (`fig6`)**, el **92% de las discrepancias ocurren entre estados vecinos** y tenemos **0.0% de falsos negativos críticos en congestión** (0 de 19 trancones reales fueron clasificados como vía fluida), garantizando seguridad operativa.*
-> *3. En la **Gráfica de Convergencia (`fig3`)**, comprobamos la ergodicidad: sea que el corredor amanezca 100% Fluido o 100% Congestionado, converge al equilibrio estacionario $\pi^*$ en menos de 2 horas (6 a 8 pasos).*
-> *4. Finalmente, en el **Escenario de Accidente Vial entre las 14:00 y 17:00 (`fig5`)**, el modelo alcanza un **80.21% de exactitud**, dispara la probabilidad posterior de alerta ITS por encima del 90% y reproduce la cola de recuperación de 30 a 45 minutos tras despejar la vía.*
->
-> *En conclusión, el HMM implementado transforma telemetría ruidosa en inteligencia operativa accionable para planes semafóricos adaptativos. Todo nuestro código, pruebas, informe y notebook en Google Colab están disponibles en nuestro repositorio público de GitHub. ¡Muchas gracias!"*
+---
+
+> **[1:55 – 2:15] FASE 6: APORTE (¿POR QUÉ MERECE PUBLICARSE EN Q1?) (20 segundos)**  
+> *(En pantalla: Gráfica de incidente vial `results/fig5_escenario_incidente_recuperacion.png`)*  
+>  
+> *"Este trabajo aporta rigor de estándar Q1 porque no es una caja negra: derivamos algebraicamente la distribución estacionaria exacta, comprobamos la Ley de los Grandes Números con un error menor al 1% y demostramos que ante un choque real, el modelo detecta la contingencia con más del 90% de certidumbre y reproduce su tiempo de recuperación."*
+
+---
+
+> **[2:15 – 2:30] FASE 7: CIERRE (15 segundos)**  
+> *(En pantalla: Vista del repositorio GitHub y cuaderno Google Colab abierto)*  
+>  
+> *"Entregamos nuestro artículo científico, el repositorio en GitHub y un cuaderno de Google Colab 100% autocontenido y ejecutable en la nube. ¡Muchas gracias por su atención y quedamos atentos a sus comentarios!"*
+
+---
+
+### ⏱️ CONSEJOS CLAVE PARA CLAVAR EL TIEMPO:
+1. **Ritmo de voz:** Habla con entusiasmo y seguridad, sin correr pero sin hacer pausas largas.
+2. **Cronómetro:** Pon un cronómetro en el celular al lado de la pantalla. A los **1:10** debes estar terminando la solución, a los **1:55** terminando los resultados y a los **2:25** diciendo *"Muchas gracias"*.
+3. **Grabación rápida:** Puedes usar Microsoft Teams, OBS o Zoom, compartiendo la pantalla con las gráficas de fondo y tu cámara en la esquina superior derecha.
