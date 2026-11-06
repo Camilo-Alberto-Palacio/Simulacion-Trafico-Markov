@@ -4,7 +4,7 @@ Actividad Didáctica 2 - Módulo 2: Simulación de Procesos Estocásticos.
 Institución Universitaria Digital de Antioquia (IU Digital) - Grupo 25.
 """
 
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Dict, Optional, Any
 import numpy as np
 
 
@@ -28,9 +28,59 @@ class TrafficHMM:
         initial_probs: Optional[np.ndarray] = None,
         transition_matrix: Optional[np.ndarray] = None,
         emission_matrix: Optional[np.ndarray] = None,
+        preset: str = "default",
     ):
-        self.states = states or ["Fluido", "Moderado", "Congestionado"]
-        self.observations = observations or ["Velocidad Alta", "Velocidad Media", "Velocidad Baja"]
+        if preset == "prompt":
+            self.states = states or ["Tráfico Fluido", "Tráfico Moderado", "Tráfico Congestionado"]
+            self.observations = observations or ["Velocidad Alta", "Velocidad Media", "Velocidad Baja"]
+            if initial_probs is not None:
+                self.pi = np.array(initial_probs, dtype=float)
+            else:
+                self.pi = np.array([0.50, 0.30, 0.20], dtype=float)
+
+            if transition_matrix is not None:
+                self.A = np.array(transition_matrix, dtype=float)
+            else:
+                self.A = np.array([
+                    [0.70, 0.25, 0.05],  # Fluido -> [0.7, 0.25, 0.05]
+                    [0.30, 0.50, 0.20],  # Moderado -> [0.3, 0.5, 0.2]
+                    [0.10, 0.40, 0.50],  # Congestionado -> [0.1, 0.4, 0.5]
+                ], dtype=float)
+
+            if emission_matrix is not None:
+                self.B = np.array(emission_matrix, dtype=float)
+            else:
+                self.B = np.array([
+                    [0.80, 0.15, 0.05],  # Fluido -> [Alta: 0.8, Media: 0.15, Baja: 0.05]
+                    [0.20, 0.60, 0.20],  # Moderado -> [Alta: 0.2, Media: 0.6, Baja: 0.2]
+                    [0.05, 0.25, 0.70],  # Congestionado -> [Alta: 0.05, Media: 0.25, Baja: 0.7]
+                ], dtype=float)
+        else:
+            self.states = states or ["Fluido", "Moderado", "Congestionado"]
+            self.observations = observations or ["Velocidad Alta", "Velocidad Media", "Velocidad Baja"]
+
+            if initial_probs is not None:
+                self.pi = np.array(initial_probs, dtype=float)
+            else:
+                self.pi = np.array([0.70, 0.20, 0.10], dtype=float)
+
+            if transition_matrix is not None:
+                self.A = np.array(transition_matrix, dtype=float)
+            else:
+                self.A = np.array([
+                    [0.70, 0.25, 0.05],  # Desde Fluido
+                    [0.20, 0.60, 0.20],  # Desde Moderado
+                    [0.05, 0.30, 0.65],  # Desde Congestionado
+                ], dtype=float)
+
+            if emission_matrix is not None:
+                self.B = np.array(emission_matrix, dtype=float)
+            else:
+                self.B = np.array([
+                    [0.80, 0.15, 0.05],  # Estado real Fluido
+                    [0.20, 0.65, 0.15],  # Estado real Moderado
+                    [0.05, 0.20, 0.75],  # Estado real Congestionado
+                ], dtype=float)
 
         self.N = len(self.states)
         self.M = len(self.observations)
@@ -40,30 +90,12 @@ class TrafficHMM:
         self.obs_to_idx = {name: i for i, name in enumerate(self.observations)}
         self.idx_to_obs = {i: name for i, name in enumerate(self.observations)}
 
-        if initial_probs is not None:
-            self.pi = np.array(initial_probs, dtype=float)
-        else:
-            self.pi = np.array([0.70, 0.20, 0.10], dtype=float)
-
-        if transition_matrix is not None:
-            self.A = np.array(transition_matrix, dtype=float)
-        else:
-            self.A = np.array([
-                [0.70, 0.25, 0.05],  # Desde Fluido
-                [0.20, 0.60, 0.20],  # Desde Moderado
-                [0.05, 0.30, 0.65],  # Desde Congestionado
-            ], dtype=float)
-
-        if emission_matrix is not None:
-            self.B = np.array(emission_matrix, dtype=float)
-        else:
-            self.B = np.array([
-                [0.80, 0.15, 0.05],  # Estado real Fluido
-                [0.20, 0.65, 0.15],  # Estado real Moderado
-                [0.05, 0.20, 0.75],  # Estado real Congestionado
-            ], dtype=float)
-
         self._validate_matrices()
+
+    @classmethod
+    def create_prompt_model(cls) -> "TrafficHMM":
+        """Crea una instancia con las especificaciones exactas del prompt de actividad didáctica."""
+        return cls(preset="prompt")
 
     def _validate_matrices(self) -> None:
         """Verifica dimensiones, no negatividad y axiomas estocásticos de Kolmogorov."""
@@ -253,3 +285,63 @@ class TrafficHMM:
         """Calcula pi_{t+k} = pi_t * A^k (Ecuación de Chapman-Kolmogorov)."""
         A_power = np.linalg.matrix_power(self.A, steps)
         return np.dot(initial_dist, A_power)
+
+    def simulate_with_speeds(
+        self,
+        T: int = 48,
+        seed: Optional[int] = None,
+        step_duration_min: int = 30,
+        start_hour: int = 0,
+    ) -> Tuple[List[int], List[int], List[float], List[str]]:
+        """
+        Simula T mediciones estocásticas con velocidades continuas en km/h:
+          - Alta: 80 - 100 km/h (mu=90, sigma=4)
+          - Media: 40 - 80 km/h (mu=60, sigma=7)
+          - Baja: 0 - 40 km/h (mu=25, sigma=6)
+        Retorna (estados_idx, observaciones_idx, velocidades_kmh, timestamps).
+        """
+        rng = np.random.default_rng(seed)
+        states_idx, obs_idx = self.simulate(T=T, seed=seed)
+
+        speeds = []
+        timestamps = []
+        for t, obs in enumerate(obs_idx):
+            if obs == 0:  # Velocidad Alta (80 - 100 km/h)
+                speed = float(np.clip(rng.normal(90.0, 4.0), 80.0, 100.0))
+            elif obs == 1:  # Velocidad Media (40 - 80 km/h)
+                speed = float(np.clip(rng.normal(60.0, 7.0), 40.0, 79.9))
+            else:  # Velocidad Baja (0 - 40 km/h)
+                speed = float(np.clip(rng.normal(25.0, 6.0), 5.0, 39.9))
+            speeds.append(round(speed, 2))
+
+            total_min = start_hour * 60 + t * step_duration_min
+            h = (total_min // 60) % 24
+            m = total_min % 60
+            timestamps.append(f"{h:02d}:{m:02d}")
+
+        return states_idx, obs_idx, speeds, timestamps
+
+    def predict_next_hours(
+        self,
+        current_state_idx: int,
+        hours: float,
+        step_duration_min: int = 30,
+    ) -> Dict[str, Any]:
+        """
+        Predice la distribución de probabilidad y estado más probable para las próximas h horas.
+        """
+        steps = max(1, int(round(hours * 60.0 / step_duration_min)))
+        e_current = np.zeros(self.N, dtype=float)
+        e_current[current_state_idx] = 1.0
+        prob_dist = self.predict_future_distribution(e_current, steps=steps)
+        most_likely_idx = int(np.argmax(prob_dist))
+        return {
+            "hours_ahead": hours,
+            "steps_ahead": steps,
+            "probability_distribution": prob_dist,
+            "most_likely_state_idx": most_likely_idx,
+            "most_likely_state": self.idx_to_state[most_likely_idx],
+            "state_probabilities": {
+                self.idx_to_state[i]: float(prob_dist[i]) for i in range(self.N)
+            },
+        }

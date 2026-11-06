@@ -82,10 +82,11 @@ B = \begin{pmatrix}
 │   ├── __init__.py                           # Exportación pública de clases
 │   ├── model.py                              # Motor matemático TrafficHMM (Viterbi, Forward-Backward, pi*)
 │   ├── simulation.py                         # Escenarios 24h, Monte Carlo (1,000 réplicas) e incidentes
-│   └── visualizations.py                     # Generador de 7 figuras científicas a 300 DPI
+│   ├── smart_city.py                         # Analítica de transporte urbano, semáforos, rutas y emisiones
+│   └── visualizations.py                     # Generador de figuras científicas a 300 DPI y dashboards
 ├── tests/                                    # Suite automatizada de pruebas unitarias
-│   └── test_hmm.py                           # 7 pruebas de invariancia, ergodicidad e inferencia
-├── results/                                  # Evidencias gráficas (300 DPI) y datos tabulares CSV
+│   └── test_hmm.py                           # 9 pruebas de invariancia, ergodicidad, inferencia y Smart City
+├── results/                                  # Evidencias gráficas (300 DPI), GIF y datos tabulares CSV
 │   ├── fig0_diagrama_estructura_hmm.png
 │   ├── fig1_matrices_transicion_emision.png
 │   ├── fig2_simulacion_jornada_24h.png
@@ -93,11 +94,19 @@ B = \begin{pmatrix}
 │   ├── fig4_validacion_monte_carlo.png
 │   ├── fig5_escenario_incidente_recuperacion.png
 │   ├── fig6_matriz_confusion_viterbi.png
+│   ├── fig_velocidad_promedio_semaforo.png    # Curva de velocidad continua y semáforo urbano
+│   ├── fig_mapa_calor_estado_hora.png        # Mapa de calor de probabilidades del estado por hora
+│   ├── fig_dashboard_ciudad_inteligente.png  # Dashboard multivariable de transporte y control urbano
+│   ├── animacion_flujo_vehicular.gif         # Animación estocástica del flujo vehicular
+│   ├── simulacion_smart_traffic_48pasos.csv  # 48 mediciones de 30 min con velocidades en km/h
 │   ├── simulacion_jornada_24h.csv
 │   └── resumen_modelo_markov.csv
-├── main.py                                   # Script principal CLI (ejecuta todo el pipeline)
-├── Simulacion_Markov_Trafico_Colab.ipynb     # Cuaderno auto-contenido y pre-ejecutado para Google Colab
-├── create_colab_notebook.py                  # Constructor y ejecutor automático del notebook
+├── main.py                                   # Script principal de investigación teórica (96 pasos / 15 min)
+├── simulacion_smart_traffic.py               # Script de Ciudad Inteligente (48 pasos / 30 min, 10 requisitos)
+├── Simulacion_Markov_Trafico_Colab.ipynb     # Cuaderno Colab de investigación académica
+├── Simulacion_HMM_SmartCity_Colab.ipynb      # Cuaderno Colab interactivo de Ciudad Inteligente
+├── create_colab_notebook.py                  # Constructor del notebook de investigación
+├── create_smart_city_colab_notebook.py       # Constructor del notebook de Ciudad Inteligente
 ├── generate_doc.py                           # Generador automatizado del informe académico Word
 ├── Evidencia de Aprendizaje 2 - Módulo 2. Actividad didáctica 2 - Modelo de Markov.docx # Informe escrito oficial entregable
 ├── GUION_VIDEO_SUSTENTACION.md               # Guion estructurado minuto a minuto para el video
@@ -130,10 +139,13 @@ pip install -r requirements.txt
 # 4. Ejecutar la simulación completa y regenerar CSVs + las 7 figuras a 300 DPI
 python main.py
 
-# 5. Ejecutar la suite de pruebas unitarias (7 verificaciones matemáticas)
+# 5. Ejecutar la simulación de Ciudad Inteligente (48 pasos, semáforos, rutas y emisiones)
+python simulacion_smart_traffic.py
+
+# 6. Ejecutar la suite de pruebas unitarias (9 verificaciones matemáticas y Smart City)
 python -m unittest discover -s tests -v
 
-# 6. Regenerar el informe académico oficial en Word (.docx)
+# 7. Regenerar el informe académico oficial en Word (.docx)
 python generate_doc.py
 ```
 

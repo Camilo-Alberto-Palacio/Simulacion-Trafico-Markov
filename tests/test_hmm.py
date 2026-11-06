@@ -6,7 +6,7 @@ Valida propiedades estocásticas, distribución estacionaria, algoritmos de infe
 
 import unittest
 import numpy as np
-from traffic_hmm import TrafficHMM, TrafficSimulation
+from traffic_hmm import TrafficHMM, TrafficSimulation, SmartCityTrafficAnalyzer
 
 
 class TestTrafficHMM(unittest.TestCase):
@@ -92,6 +92,40 @@ class TestTrafficHMM(unittest.TestCase):
         self.assertGreater(mc["mean_accuracy"], 0.70)
         # Verifica que Viterbi suprime más del 50% de las oscilaciones ruidosas del sensor crudo
         self.assertLess(mc["mean_switches_viterbi"], 0.55 * mc["mean_switches_naive"])
+
+    def test_prompt_preset_model_properties(self) -> None:
+        """Verifica que el modelo con preset 'prompt' cumpla exactamente las especificaciones de la actividad."""
+        hmm_prompt = TrafficHMM.create_prompt_model()
+        np.testing.assert_allclose(hmm_prompt.pi, [0.5, 0.3, 0.2])
+        np.testing.assert_allclose(hmm_prompt.A[0], [0.7, 0.25, 0.05])
+        np.testing.assert_allclose(hmm_prompt.A[1], [0.3, 0.5, 0.2])
+        np.testing.assert_allclose(hmm_prompt.A[2], [0.1, 0.4, 0.5])
+
+        np.testing.assert_allclose(hmm_prompt.B[0], [0.8, 0.15, 0.05])
+        np.testing.assert_allclose(hmm_prompt.B[1], [0.2, 0.6, 0.2])
+        np.testing.assert_allclose(hmm_prompt.B[2], [0.05, 0.25, 0.7])
+
+        pi_star = hmm_prompt.compute_stationary_distribution()
+        np.testing.assert_allclose(pi_star @ hmm_prompt.A, pi_star, atol=1e-10)
+
+    def test_smart_city_analyzer_simulation(self) -> None:
+        """Verifica la simulación de 48 mediciones de 30 min y métricas de ciudad inteligente."""
+        analyzer = SmartCityTrafficAnalyzer()
+        df = analyzer.simulate_day(num_steps=48, seed=42)
+        self.assertEqual(len(df), 48)
+        self.assertTrue(np.all((df["Velocidad_kmh"] >= 0.0) & (df["Velocidad_kmh"] <= 105.0)))
+
+        metrics = analyzer.calculate_transport_metrics(df)
+        self.assertGreaterEqual(metrics["indice_congestion_0_100"], 0.0)
+        self.assertLessEqual(metrics["indice_congestion_0_100"], 100.0)
+        self.assertIn("horas_pico_identificadas", metrics)
+
+        patterns = analyzer.identify_congestion_patterns(df)
+        self.assertIn("franja_mas_critica", patterns)
+
+        env = analyzer.analyze_environmental_impact(df)
+        self.assertGreater(env["emisiones_totales_co2_toneladas"], 0.0)
+        self.assertGreaterEqual(env["exceso_co2_por_congestion_toneladas"], 0.0)
 
 
 if __name__ == "__main__":
