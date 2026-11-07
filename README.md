@@ -1,8 +1,9 @@
 # Simulación Estocástica de Tráfico Vehicular con Modelo Oculto de Markov (HMM)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Camilo-Alberto-Palacio/Simulacion-Trafico-Markov/blob/main/Simulacion_Markov_Trafico_Colab.ipynb)
+[![Watch Video Pitch](https://img.shields.io/badge/YouTube-Video%20Pitch%20(2:57)-FF0000?logo=youtube&logoColor=white)](https://youtu.be/IdrZkVlJzT8)
 ![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
-![Tests](https://img.shields.io/badge/Tests-7%2F7%20Passing-brightgreen.svg)
+![Tests](https://img.shields.io/badge/Tests-9%2F9%20Passing-brightgreen.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Institution](https://img.shields.io/badge/IU%20Digital%20de%20Antioquia-Grupo%2025-1E3A8A)
 
@@ -13,6 +14,7 @@ Proyecto desarrollado para la **Actividad Didáctica 2 — Módulo 2: Distribuci
 ---
 
 ## Tabla de Contenidos
+0. [Sustentación Audiovisual (Video Pitch Oficial)](#sustentación-audiovisual-video-pitch-oficial)
 1. [Descripción del Problema y Justificación del HMM](#descripción-del-problema-y-justificación-del-hmm)
 2. [Formulación Matemática](#formulación-matemática)
 3. [Algoritmos Implementados](#algoritmos-implementados)
@@ -21,6 +23,20 @@ Proyecto desarrollado para la **Actividad Didáctica 2 — Módulo 2: Distribuci
 6. [Resultados Principales y Visualizaciones](#resultados-principales-y-visualizaciones)
 7. [Equipo de Trabajo (Grupo 25)](#equipo-de-trabajo-grupo-25)
 8. [Licencia](#licencia)
+
+---
+
+---
+
+## Sustentación Audiovisual (Video Pitch Oficial)
+
+El trabajo cuenta con sustentación oral grabada en formato **Elevator Pitch de Investigación** (2 minutos y 57 segundos), disponible públicamente en YouTube:
+
+[![Ver Video Pitch](https://img.youtube.com/vi/IdrZkVlJzT8/maxresdefault.jpg)](https://youtu.be/IdrZkVlJzT8)
+
+* 🎥 **Enlace Directo:** [https://youtu.be/IdrZkVlJzT8](https://youtu.be/IdrZkVlJzT8)
+* ⏱️ **Duración:** 02:57 (dentro del límite reglamentario de 2 a 3 minutos).
+* 👤 **Portavoz:** Camilo Palacios (en representación del Grupo 25).
 
 ---
 

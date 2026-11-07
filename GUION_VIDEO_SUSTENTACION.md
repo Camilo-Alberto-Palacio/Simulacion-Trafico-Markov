@@ -8,6 +8,8 @@
 * **Integrantes del Equipo:** Adriana Agudelo, Camilo Palacios, Juan Daniel Pulgarin y Ruben Jaramillo
 * **Duración Total:** **2 minutos y 30 segundos (Límite estricto: Máximo 3:00 minutos)**
 * **Formato:** Video horizontal (16:9), 1080p, audio nítido sin música de fondo
+* **Enlace Oficial YouTube:** [https://youtu.be/IdrZkVlJzT8](https://youtu.be/IdrZkVlJzT8)
+* **Duración Grabada:** **02:57** (177.1 segundos — Cumple límite estricto de 2:00 a 3:00 minutos)
 * **Recurso Visual:** Presentador en cámara web (esquina) + pantalla compartida mostrando las gráficas de `results/` o el Google Colab
 
 ---
